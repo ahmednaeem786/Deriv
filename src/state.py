@@ -1,7 +1,6 @@
 """Pipeline state tracking and stage enforcement."""
 
 from enum import Enum
-from typing import Dict, List, Optional
 
 
 class PipelineStage(str, Enum):
@@ -23,7 +22,7 @@ class StateManager:
     """Enforces strict forward-only progression across pipeline stages."""
 
     # Explicit stage ordering to ensure downstream stages cannot execute out of order
-    STAGE_ORDER: List[PipelineStage] = [
+    STAGE_ORDER: list[PipelineStage] = [
         PipelineStage.INIT,
         PipelineStage.INPUTS_LOADED,
         PipelineStage.TICKETS_NORMALIZED,
@@ -34,7 +33,7 @@ class StateManager:
         PipelineStage.RESULTS_FINALISED,
     ]
 
-    ALLOWED_TRANSITIONS: Dict[PipelineStage, List[PipelineStage]] = {
+    ALLOWED_TRANSITIONS: dict[PipelineStage, list[PipelineStage]] = {
         PipelineStage.INIT: [PipelineStage.INPUTS_LOADED],
         PipelineStage.INPUTS_LOADED: [PipelineStage.TICKETS_NORMALIZED],
         PipelineStage.TICKETS_NORMALIZED: [PipelineStage.TRIAGE_PREDICTED],
