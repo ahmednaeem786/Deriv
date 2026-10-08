@@ -14,8 +14,8 @@ from src.reviewer import run_review_checkpoint
 from src.state import PipelineStage, StateManager
 
 # Default file artifact paths
-TICKETS_FILE = Path("tickets.json")
-CONFIG_FILE = Path("triage_config.json")
+TICKETS_FILE = Path("data") / "tickets.json"
+CONFIG_FILE = Path("config") / "triage_config.json"
 NORMALIZED_FILE = Path("normalized_tickets.json")
 PREDICTIONS_FILE = Path("triage_predictions.json")
 OVERRIDES_FILE = Path("review_overrides.json")
@@ -115,7 +115,7 @@ def main() -> None:
     log_llm_call(
         stage=state.current_stage.value,
         provider="google",
-        model="gemini-2.5-flash",
+        model="gemini-3.5-flash",
         prompt_text=prompt_record,
         input_artifacts=[str(NORMALIZED_FILE), str(CONFIG_FILE)],
         output_artifact=str(PREDICTIONS_FILE),

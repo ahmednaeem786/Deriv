@@ -142,3 +142,59 @@ def call_llm_triage(
         json.dump(final_predictions, f, indent=2, ensure_ascii=False)
 
     return final_predictions
+
+
+"""Stage 2 Supplement: Audit logger for LLM invocations (Stretch Goal 8)."""
+
+import hashlib
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import List, Union
+
+
+def log_llm_call(
+    stage: str,
+    provider: str,
+    model: str,
+    prompt_text: str,
+    input_artifacts: List[Union[str, Path]],
+    output_artifact: Union[str, Path],
+    log_file_path: Union[str, Path] = "llm_calls.jsonl",
+) -> None:
+    """
+    Logs a single LLM invocation to a JSONL file with execution metadata and a prompt hash.
+
+    Args:
+        stage: The current pipeline stage (e.g., "TRIAGE_PREDICTED").
+        provider: The LLM provider name (e.g., "google").
+        model: The specific model used (e.g., "gemini-2.5-flash").
+        prompt_text: The complete text sent to the model (used for hashing).
+        input_artifacts: List of file paths used as input for this call.
+        output_artifact: File path where the LLM's output was saved.
+        log_file_path: Destination path for the JSONL log file.
+    """
+    # 1. Compute SHA-256 hash of the full prompt
+    prompt_hash = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
+
+    # 2. Generate strict ISO-8601 UTC timestamp
+    timestamp = datetime.now(timezone.utc).isoformat()
+
+    # 3. Format the log entry strictly matching the evaluator's schema
+    log_entry = {
+        "stage": stage,
+        "timestamp": timestamp,
+        "provider": provider,
+        "model": model,
+        "prompt_hash": prompt_hash,
+        "input_artifacts": [str(path) for path in input_artifacts],
+        "output_artifact": str(output_artifact),
+    }
+
+    # 4. Append to the JSON Lines (JSONL) file
+    log_path = Path(log_file_path)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(log_path, "a", encoding="utf-8") as f:
+        # JSONL format requires exactly one valid JSON object per line
+        f.write(json.dumps(log_entry) + "\n")

@@ -1,0 +1,34 @@
+[
+  {
+    "ticket_id": "T-1001",
+    "final_category": "billing_issue",
+    "final_priority": "high",
+    "final_route_to": "payments_queue",
+    "suggested_reply": "Thank you for contacting us. We understand you've been charged twice for a single deposit. We are investigating this billing discrepancy and will work to resolve it promptly. You will be updated on the status of the reversal.",
+    "was_overridden": false
+  },
+  {
+    "ticket_id": "T-1002",
+    "final_category": "account_access",
+    "final_priority": "urgent",
+    "final_route_to": "trust_and_access_queue",
+    "suggested_reply": "We apologize for the login issue after your password reset. We understand the urgency and are actively looking into this to restore your account access as quickly as possible. Please bear with us.",
+    "was_overridden": false
+  },
+  {
+    "ticket_id": "T-1003",
+    "final_category": "other",
+    "final_priority": "urgent",
+    "final_route_to": "manual_review_queue",
+    "suggested_reply": "Thank you for reaching out. You can typically export your transaction history as a CSV from the 'Statements' or 'Reports' section within your account settings on our platform. We'll provide detailed steps shortly.",
+    "was_overridden": true
+  },
+  {
+    "ticket_id": "T-1004",
+    "final_category": "bug_report",
+    "final_priority": "high",
+    "final_route_to": "technical_queue",
+    "suggested_reply": "We apologize for the inconvenience. We've noted your report about the app crashing when accessing your portfolio, even after updating. Our technical team is investigating this issue to provide a fix as soon as possible.",
+    "was_overridden": false
+  }
+]

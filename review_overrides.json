@@ -1,0 +1,9 @@
+[
+  {
+    "ticket_id": "T-1003",
+    "old_category": "product_how_to",
+    "new_category": "other",
+    "old_priority": "normal",
+    "new_priority": "urgent"
+  }
+]

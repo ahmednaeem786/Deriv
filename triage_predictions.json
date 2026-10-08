@@ -1,0 +1,38 @@
+[
+  {
+    "ticket_id": "T-1001",
+    "category": "billing_issue",
+    "priority": "high",
+    "confidence": 1.0,
+    "reason": "Customer reports being charged twice for a single deposit, requesting a reversal of the extra charge, which is a direct billing issue.",
+    "suggested_reply": "Thank you for contacting us. We understand you've been charged twice for a single deposit. We are investigating this billing discrepancy and will work to resolve it promptly. You will be updated on the status of the reversal.",
+    "route_to": "payments_queue"
+  },
+  {
+    "ticket_id": "T-1002",
+    "category": "account_access",
+    "priority": "urgent",
+    "confidence": 1.0,
+    "reason": "Customer cannot log in after a password reset and needs urgent access before market open, indicating an account access issue.",
+    "suggested_reply": "We apologize for the login issue after your password reset. We understand the urgency and are actively looking into this to restore your account access as quickly as possible. Please bear with us.",
+    "route_to": "trust_and_access_queue"
+  },
+  {
+    "ticket_id": "T-1003",
+    "category": "product_how_to",
+    "priority": "normal",
+    "confidence": 1.0,
+    "reason": "Customer is asking for instructions on how to export transaction history, which is a 'how-to' question about product functionality.",
+    "suggested_reply": "Thank you for reaching out. You can typically export your transaction history as a CSV from the 'Statements' or 'Reports' section within your account settings on our platform. We'll provide detailed steps shortly.",
+    "route_to": "general_support_queue"
+  },
+  {
+    "ticket_id": "T-1004",
+    "category": "bug_report",
+    "priority": "high",
+    "confidence": 1.0,
+    "reason": "Customer reports the mobile app crashing consistently when accessing a specific feature, indicating a software bug.",
+    "suggested_reply": "We apologize for the inconvenience. We've noted your report about the app crashing when accessing your portfolio, even after updating. Our technical team is investigating this issue to provide a fix as soon as possible.",
+    "route_to": "technical_queue"
+  }
+]
