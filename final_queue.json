@@ -4,7 +4,7 @@
     "final_category": "billing_issue",
     "final_priority": "high",
     "final_route_to": "payments_queue",
-    "suggested_reply": "Thank you for contacting us. We understand you've been charged twice for a single deposit. We are investigating this billing discrepancy and will work to resolve it promptly. You will be updated on the status of the reversal.",
+    "suggested_reply": "Thank you for contacting us. We understand you've been charged twice for a single deposit. We are looking into this issue immediately and will work to resolve the extra charge. Please allow us some time to investigate and we will provide an update shortly.",
     "was_overridden": false
   },
   {
@@ -12,23 +12,23 @@
     "final_category": "account_access",
     "final_priority": "urgent",
     "final_route_to": "trust_and_access_queue",
-    "suggested_reply": "We apologize for the login issue after your password reset. We understand the urgency and are actively looking into this to restore your account access as quickly as possible. Please bear with us.",
+    "suggested_reply": "Thank you for reaching out. We understand you're unable to log in after resetting your password and need urgent access. Our team is investigating this immediately to restore your account access. We will contact you as soon as possible with a resolution.",
     "was_overridden": false
   },
   {
     "ticket_id": "T-1003",
-    "final_category": "other",
-    "final_priority": "urgent",
-    "final_route_to": "manual_review_queue",
-    "suggested_reply": "Thank you for reaching out. You can typically export your transaction history as a CSV from the 'Statements' or 'Reports' section within your account settings on our platform. We'll provide detailed steps shortly.",
-    "was_overridden": true
+    "final_category": "product_how_to",
+    "final_priority": "normal",
+    "final_route_to": "general_support_queue",
+    "suggested_reply": "Thank you for your inquiry. You can typically export your transaction history as a CSV from your account settings or a dedicated 'Reports' section within the platform. We'll provide detailed steps or a direct link to guide you through the process shortly.",
+    "was_overridden": false
   },
   {
     "ticket_id": "T-1004",
     "final_category": "bug_report",
     "final_priority": "high",
     "final_route_to": "technical_queue",
-    "suggested_reply": "We apologize for the inconvenience. We've noted your report about the app crashing when accessing your portfolio, even after updating. Our technical team is investigating this issue to provide a fix as soon as possible.",
+    "suggested_reply": "Thank you for reporting this issue. We're sorry to hear the app is crashing when you access your portfolio. We appreciate you updating to the latest version. Our technical team will investigate this bug immediately. We will keep you informed of our progress and any potential solutions.",
     "was_overridden": false
   }
 ]

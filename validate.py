@@ -6,18 +6,20 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
+from src.paths import artifact_path, resolve_input_path
+
 # Expected file paths
-TICKETS_FILE = Path("tickets.json")
-CONFIG_FILE = Path("triage_config.json")
-NORMALIZED_FILE = Path("normalized_tickets.json")
-PREDICTIONS_FILE = Path("triage_predictions.json")
-OVERRIDES_FILE = Path("review_overrides.json")
-FINAL_QUEUE_FILE = Path("final_queue.json")
-SUMMARY_FILE = Path("queue_summary.md")
+TICKETS_FILE = resolve_input_path("tickets.json", "data")
+CONFIG_FILE = resolve_input_path("triage_config.json", "config")
+NORMALIZED_FILE = artifact_path("normalized_tickets.json")
+PREDICTIONS_FILE = artifact_path("triage_predictions.json")
+OVERRIDES_FILE = artifact_path("review_overrides.json")
+FINAL_QUEUE_FILE = artifact_path("final_queue.json")
+SUMMARY_FILE = artifact_path("queue_summary.md")
 
 # Optional/Stretch artifacts
-ESCALATIONS_FILE = Path("escalations.json")
-LLM_LOGS_FILE = Path("llm_calls.jsonl")
+ESCALATIONS_FILE = artifact_path("escalations.json")
+LLM_LOGS_FILE = artifact_path("llm_calls.jsonl")
 
 
 class ValidationError(Exception):

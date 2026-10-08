@@ -3,36 +3,36 @@
     "ticket_id": "T-1001",
     "category": "billing_issue",
     "priority": "high",
-    "confidence": 1.0,
-    "reason": "Customer reports being charged twice for a single deposit, requesting a reversal of the extra charge, which is a direct billing issue.",
-    "suggested_reply": "Thank you for contacting us. We understand you've been charged twice for a single deposit. We are investigating this billing discrepancy and will work to resolve it promptly. You will be updated on the status of the reversal.",
+    "confidence": 0.95,
+    "reason": "Customer reports being charged twice for a single deposit and requests a reversal.",
+    "suggested_reply": "Thank you for contacting us. We understand you've been charged twice for a single deposit. We are looking into this issue immediately and will work to resolve the extra charge. Please allow us some time to investigate and we will provide an update shortly.",
     "route_to": "payments_queue"
   },
   {
     "ticket_id": "T-1002",
     "category": "account_access",
     "priority": "urgent",
-    "confidence": 1.0,
-    "reason": "Customer cannot log in after a password reset and needs urgent access before market open, indicating an account access issue.",
-    "suggested_reply": "We apologize for the login issue after your password reset. We understand the urgency and are actively looking into this to restore your account access as quickly as possible. Please bear with us.",
+    "confidence": 0.98,
+    "reason": "Customer cannot log in after a password reset and requires urgent access before market open.",
+    "suggested_reply": "Thank you for reaching out. We understand you're unable to log in after resetting your password and need urgent access. Our team is investigating this immediately to restore your account access. We will contact you as soon as possible with a resolution.",
     "route_to": "trust_and_access_queue"
   },
   {
     "ticket_id": "T-1003",
     "category": "product_how_to",
     "priority": "normal",
-    "confidence": 1.0,
-    "reason": "Customer is asking for instructions on how to export transaction history, which is a 'how-to' question about product functionality.",
-    "suggested_reply": "Thank you for reaching out. You can typically export your transaction history as a CSV from the 'Statements' or 'Reports' section within your account settings on our platform. We'll provide detailed steps shortly.",
+    "confidence": 0.97,
+    "reason": "Customer is asking for instructions on how to export their transaction history for accounting purposes.",
+    "suggested_reply": "Thank you for your inquiry. You can typically export your transaction history as a CSV from your account settings or a dedicated 'Reports' section within the platform. We'll provide detailed steps or a direct link to guide you through the process shortly.",
     "route_to": "general_support_queue"
   },
   {
     "ticket_id": "T-1004",
     "category": "bug_report",
     "priority": "high",
-    "confidence": 1.0,
-    "reason": "Customer reports the mobile app crashing consistently when accessing a specific feature, indicating a software bug.",
-    "suggested_reply": "We apologize for the inconvenience. We've noted your report about the app crashing when accessing your portfolio, even after updating. Our technical team is investigating this issue to provide a fix as soon as possible.",
+    "confidence": 0.96,
+    "reason": "Customer reports that the mobile app crashes consistently when attempting to open the portfolio tab, even after updating.",
+    "suggested_reply": "Thank you for reporting this issue. We're sorry to hear the app is crashing when you access your portfolio. We appreciate you updating to the latest version. Our technical team will investigate this bug immediately. We will keep you informed of our progress and any potential solutions.",
     "route_to": "technical_queue"
   }
 ]

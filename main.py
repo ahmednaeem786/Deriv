@@ -9,20 +9,21 @@ from src.llm_client import call_llm_triage
 from src.logger import log_llm_call
 from src.models import TriageConfig
 from src.normalizer import run_normalization
+from src.paths import artifact_path, resolve_input_path
 from src.queue_generator import build_final_queue, generate_markdown_summary
 from src.reviewer import run_review_checkpoint
 from src.state import PipelineStage, StateManager
 
 # Default file artifact paths
-TICKETS_FILE = Path("data") / "tickets.json"
-CONFIG_FILE = Path("config") / "triage_config.json"
-NORMALIZED_FILE = Path("normalized_tickets.json")
-PREDICTIONS_FILE = Path("triage_predictions.json")
-OVERRIDES_FILE = Path("review_overrides.json")
-FINAL_QUEUE_FILE = Path("final_queue.json")
-SUMMARY_FILE = Path("queue_summary.md")
-ESCALATIONS_FILE = Path("escalations.json")
-LLM_LOG_FILE = Path("llm_calls.jsonl")
+TICKETS_FILE = resolve_input_path("tickets.json", "data")
+CONFIG_FILE = resolve_input_path("triage_config.json", "config")
+NORMALIZED_FILE = artifact_path("normalized_tickets.json")
+PREDICTIONS_FILE = artifact_path("triage_predictions.json")
+OVERRIDES_FILE = artifact_path("review_overrides.json")
+FINAL_QUEUE_FILE = artifact_path("final_queue.json")
+SUMMARY_FILE = artifact_path("queue_summary.md")
+ESCALATIONS_FILE = artifact_path("escalations.json")
+LLM_LOG_FILE = artifact_path("llm_calls.jsonl")
 
 
 def load_inputs(tickets_path: Path, config_path: Path) -> tuple[dict[str, Any], list]:

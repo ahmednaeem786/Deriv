@@ -58,7 +58,7 @@ RULES:
 3. Priority must be strictly chosen from the allowed priorities list.
 4. 'route_to' must exactly match the destination mapped to your chosen category in the routing rules.
 5. 'suggested_reply' must follow this tone: {config["reply_style"]["tone"]}.
-6. 'suggested_reply' MUST BE LESS THAN {config["reply_style"]["max_words"]} words.
+6. 'suggested_reply' MUST BE AT MOST {config["reply_style"]["max_words"]} words.
 
 TICKETS TO PROCESS:
 {tickets_json}
@@ -66,6 +66,64 @@ TICKETS TO PROCESS:
 ROUTING RULES FOR REFERENCE:
 {json.dumps(config["routing_rules"], indent=2)}
 """
+
+
+def _fallback_prediction(ticket_id: str, config: dict[str, Any]) -> dict[str, Any]:
+    """Build a valid fallback using only values from the active configuration."""
+    allowed_categories = config.get("allowed_categories", [])
+    allowed_priorities = config.get("allowed_priorities", [])
+    routing_rules = config.get("routing_rules", {})
+    max_words = config["reply_style"]["max_words"]
+
+    if not allowed_categories or not allowed_priorities or max_words < 1:
+        raise ValueError(
+            "Configuration must define usable categories, priorities, and max_words"
+        )
+
+    category = next(
+        (
+            candidate
+            for candidate in ("other", *allowed_categories)
+            if candidate in allowed_categories and candidate in routing_rules
+        ),
+        None,
+    )
+    if category is None:
+        raise ValueError(
+            "Configuration must map at least one allowed category to a route"
+        )
+
+    priority = "normal" if "normal" in allowed_priorities else allowed_priorities[0]
+    reply_words = "A support agent will review your inquiry shortly.".split()
+    suggested_reply = " ".join(reply_words[:max_words])
+
+    return {
+        "ticket_id": ticket_id,
+        "category": category,
+        "priority": priority,
+        "confidence": 0.0,
+        "reason": "Malformed or omitted by LLM batch response; routed for safety.",
+        "suggested_reply": suggested_reply,
+        "route_to": routing_rules[category],
+    }
+
+
+def _prediction_matches_config(
+    prediction: dict[str, Any], config: dict[str, Any]
+) -> bool:
+    """Check model output fields that depend on runtime configuration."""
+    category = prediction.get("category")
+    priority = prediction.get("priority")
+    expected_route = config["routing_rules"].get(category)
+    max_words = config["reply_style"]["max_words"]
+
+    return (
+        category in config["allowed_categories"]
+        and priority in config["allowed_priorities"]
+        and expected_route is not None
+        and prediction.get("route_to") == expected_route
+        and len(prediction.get("suggested_reply", "").strip().split()) <= max_words
+    )
 
 
 def call_llm_triage(
@@ -114,26 +172,15 @@ def call_llm_triage(
     final_predictions = []
 
     for ticket in normalized_tickets:
-        if ticket.ticket_id in prediction_map:
-            final_predictions.append(prediction_map[ticket.ticket_id])
+        candidate = prediction_map.get(ticket.ticket_id)
+        if candidate is not None and _prediction_matches_config(candidate, config):
+            final_predictions.append(candidate)
         else:
             # Fallback for missing/malformed tickets
             print(
-                f"⚠️ Warning: Ticket {ticket.ticket_id} missing from LLM output. Applying safety fallback."
+                f"⚠️ Warning: Ticket {ticket.ticket_id} missing or invalid in LLM output. Applying safety fallback."
             )
-            final_predictions.append(
-                {
-                    "ticket_id": ticket.ticket_id,
-                    "category": "other",
-                    "priority": "normal",
-                    "confidence": 0.0,
-                    "reason": "Malformed or omitted by LLM batch response; routed for safety.",
-                    "suggested_reply": "Thank you for reaching out. A support agent will review your inquiry shortly.",
-                    "route_to": config["routing_rules"].get(
-                        "other", "manual_review_queue"
-                    ),
-                }
-            )
+            final_predictions.append(_fallback_prediction(ticket.ticket_id, config))
 
     # 4. Save to disk
     output_file = Path(output_path)
